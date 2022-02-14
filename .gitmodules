@@ -7,3 +7,6 @@
 [submodule "pakketservice"]
 	path = pakketservice
 	url = https://github.com/FIPost/pakketservice
+[submodule "locatieservice"]
+	path = locatieservice
+	url = https://github.com/FIPost/locatieservice
