@@ -10,3 +10,6 @@
 [submodule "locatieservice"]
 	path = locatieservice
 	url = https://github.com/FIPost/locatieservice
+[submodule "personeel-service"]
+	path = personeel-service
+	url = https://github.com/FIPost/personeel-service
