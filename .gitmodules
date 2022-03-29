@@ -13,3 +13,6 @@
 [submodule "personeel-service"]
 	path = personeel-service
 	url = https://github.com/FIPost/personeel-service
+[submodule "ocelot-api-gateway"]
+	path = ocelot-api-gateway
+	url = https://github.com/FIPost/ocelot-api-gateway.git
