@@ -1,12 +1,13 @@
 services:
 
   database:
-    image: mcr.microsoft.com/mssql/server
+    image: mcr.microsoft.com/mssql/server:2017-latest
     environment:
       - SA_PASSWORD=Your_password123
       - ACCEPT_EULA=Y
+      - MSSQL_PID=Developer
     ports:
-      - "1001:1443"
+      - "1433:1433"
     volumes:
       - ipost_data:/var/opt/mssql
     networks:
@@ -30,6 +31,7 @@ services:
       context: .
       dockerfile: docker/Dockerfile.package
     container_name: package-service
+    restart: always
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:5001
@@ -45,6 +47,7 @@ services:
       context: .
       dockerfile: docker/Dockerfile.location
     container_name: location-service
+    restart: always
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ENVIRONMENT=Development
@@ -60,6 +63,7 @@ services:
       context: .
       dockerfile: docker/Dockerfile.personeel
     container_name: personeel-service
+    restart: on-failure
     ports:
       - "0.0.0.0:5003:5003"
     networks:
