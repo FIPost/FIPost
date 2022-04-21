@@ -1,9 +1,6 @@
 [submodule "ui"]
 	path = ui
 	url = https://github.com/FIPost/ui
-[submodule "api-gateway"]
-	path = api-gateway
-	url = https://github.com/FIPost/api-gateway
 [submodule "pakketservice"]
 	path = pakketservice
 	url = https://github.com/FIPost/pakketservice
