@@ -1,0 +1,77 @@
+services:
+
+  database:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    environment:
+      - SA_PASSWORD=Your_password123
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      - ipost_data:/var/opt/mssql
+    networks:
+      - ipost-network
+
+  api-gateway:
+    build: 
+      context: .
+      dockerfile: docker/Dockerfile.gateway
+    container_name: Gateway
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8123
+    ports:
+      - "8123:8123"
+    networks:
+      - ipost-network
+
+  package:
+    build: 
+      context: .
+      dockerfile: docker/Dockerfile.package
+    container_name: package-service
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5001
+    depends_on:
+      - database
+    ports:
+      - "0.0.0.0:5001:5001"
+    networks:
+      - ipost-network
+
+  location:
+    build: 
+      context: .
+      dockerfile: docker/Dockerfile.location
+    container_name: location-service
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ENVIRONMENT=Development
+    depends_on:
+      - database
+    ports:
+      - "0.0.0.0:5002:5002"
+    networks:
+      - ipost-network
+
+  personeel:
+    build: 
+      context: .
+      dockerfile: docker/Dockerfile.personeel
+    container_name: personeel-service
+    restart: on-failure
+    ports:
+      - "0.0.0.0:5003:5003"
+    networks:
+      - ipost-network
+
+volumes:
+  ipost_data:
+
+networks:
+    ipost-network:
+      driver: bridge
